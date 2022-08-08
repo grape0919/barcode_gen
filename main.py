@@ -1,3 +1,4 @@
+import os
 from generator import read_barcode_list, code2img, svg2pdf
 import configparser
 
@@ -9,8 +10,10 @@ config = properties["BARCODE"] ## 섹션 선택
 input_file = config['input_file']
 output_folder = config['output_folder']
 # output_type = config['extension']
-
-
+try:
+    os.mkdir(output_folder)
+except :
+    pass
 barcode_list = read_barcode_list(input_file)
 
 for code in barcode_list:

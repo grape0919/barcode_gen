@@ -9,6 +9,7 @@ DEFAULT_OPTIONS = {
     "module_width":0.1674,
     "module_height":5.4,
     "font_size":4.8,
+    "font_path":"./윤고딕330.ttf",
     "background":"white",
     "dpi":300
 }
@@ -74,7 +75,7 @@ class CSTWriter(SVGWriter):
         attributes = {
             "x": SIZE.format(0),
             "y": SIZE.format(ypos),
-            "style": "font-family:'YDIYGO330';font-size:4.8pt;letter-spacing:0.12em;",
+            "style": "font-family:'윤고딕330';font-size:4.8pt;letter-spacing:0.12em;",
         }
         _set_attributes(element, **attributes)
         text_element = self._document.createTextNode(temp_text)
@@ -87,7 +88,7 @@ class CSTWriter(SVGWriter):
         attributes = {
             "x": SIZE.format(2.55),
             "y": SIZE.format(ypos),
-            "style": "font-family:'YDIYGO330';font-size:4.8pt;letter-spacing:0.12em;",
+            "style": "font-family:'윤고딕330';font-size:4.8pt;letter-spacing:0.12em;",
         }
         _set_attributes(element, **attributes)
         text_element = self._document.createTextNode(temp_text)
@@ -100,7 +101,7 @@ class CSTWriter(SVGWriter):
         attributes = {
             "x": SIZE.format(10.3),
             "y": SIZE.format(ypos),
-            "style": "font-family:'YDIYGO330';font-size:4.8pt;letter-spacing:0.12em;",
+            "style": "font-family:'윤고딕330';font-size:4.8pt;letter-spacing:0.12em;",
         }
         _set_attributes(element, **attributes)
         text_element = self._document.createTextNode(temp_text)
