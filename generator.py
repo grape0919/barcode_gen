@@ -2,11 +2,9 @@ import os
 from barcode import EAN13
 import openpyxl
 from barcode.writer import SVGWriter, SIZE, COMMENT, _set_attributes, create_svg_object
-from svglib.svglib import svg2rlg
-from reportlab.graphics import renderPDF
 
 DEFAULT_OPTIONS = {
-    "module_width":0.1674,
+    "module_width":0.167,
     "module_height":5.4,
     "font_size":4.8,
     "font_path":"./윤고딕330.ttf",
@@ -36,28 +34,28 @@ class CSTWriter(SVGWriter):
         attributes = {"id": "barcode_group"}
         _set_attributes(group, **attributes)
         self._group = self._root.appendChild(group)
-        background = self._document.createElement("rect")
-        attributes = {
-            "width": "100%",
-            "height": "100%",
-            "style": f"fill:{self.background}",
-        }
-        _set_attributes(background, **attributes)
-        self._group.appendChild(background)
+        # background = self._document.createElement("rect")
+        # attributes = {
+        #     "width": "100%",
+        #     "height": "100%",
+        #     "style": f"fill:{self.background}",
+        # }
+        # _set_attributes(background, **attributes)
+        # self._group.appendChild(background)
 
     def _create_module(self, xpos, ypos, width, color):
         # Background rect has been provided already, so skipping "spaces"
         if color != self.background:
             element = self._document.createElement("rect")
             height = self.module_height
-            if len(self._group.childNodes) in [1,2,15,16,29,30]:
+            if len(self._group.childNodes) in [0,1,14,15,28,29]:
                 height = height + 1
             attributes = {
                 "x": SIZE.format(xpos-4.5),
                 "y": SIZE.format(ypos-1.0),
                 "width": SIZE.format(width),
                 "height": SIZE.format(height),
-                "style": f"fill:{color};",
+                "style": f"fill:device-cmyk(0.00, 0.00, 0.00, 100.00);",
             }
             _set_attributes(element, **attributes)
             self._group.appendChild(element)
@@ -75,7 +73,7 @@ class CSTWriter(SVGWriter):
         attributes = {
             "x": SIZE.format(0),
             "y": SIZE.format(ypos),
-            "style": "font-family:'윤고딕330';font-size:4.8pt;letter-spacing:0.12em;",
+            "style": "font-family:'-윤고딕330';font-size:4.8pt;letter-spacing:0.13em;",
         }
         _set_attributes(element, **attributes)
         text_element = self._document.createTextNode(temp_text)
@@ -88,7 +86,7 @@ class CSTWriter(SVGWriter):
         attributes = {
             "x": SIZE.format(2.55),
             "y": SIZE.format(ypos),
-            "style": "font-family:'윤고딕330';font-size:4.8pt;letter-spacing:0.12em;",
+            "style": "font-family:'-윤고딕330';font-size:4.8pt;letter-spacing:0.13em;",
         }
         _set_attributes(element, **attributes)
         text_element = self._document.createTextNode(temp_text)
@@ -99,9 +97,9 @@ class CSTWriter(SVGWriter):
         element = self._document.createElement("text")
         temp_text = barcodetext[7:]
         attributes = {
-            "x": SIZE.format(10.3),
+            "x": SIZE.format(10.1),
             "y": SIZE.format(ypos),
-            "style": "font-family:'윤고딕330';font-size:4.8pt;letter-spacing:0.12em;",
+            "style": "font-family:'-윤고딕330';font-size:4.8pt;letter-spacing:0.13em;",
         }
         _set_attributes(element, **attributes)
         text_element = self._document.createTextNode(temp_text)
@@ -122,16 +120,11 @@ def read_barcode_list(file_path):
             
     return number_list
 
-def svg2pdf(file_path):
-    f_, ext = os.path.splitext(file_path)
-    drawing = svg2rlg(file_path)
-    renderPDF.drawToFile(drawing, f_+".pdf")
-
 def code2img(code, output_path):
     str_number = str(code)
     my_barcode = EAN13(str_number, writer=MY_WRITER)#, writer=image_writer)
     file_name = str_number
     output = os.path.join(output_path, file_name)
     my_barcode.save(output ,DEFAULT_OPTIONS)
-    return output
+    return MY_WRITER._group
     
