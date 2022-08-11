@@ -4,7 +4,7 @@ from fpdf import FPDF
 class PdfGen():
     
     def __init__(self):
-        self.pdf_obj = FPDF(unit="mm")
+        self.pdf_obj = FPDF(unit="mm", format=(18,7.4))
         self.pdf_obj.add_font("yugo330",fname="./윤고딕330.ttf",uni=True)
         self.pdf_obj.set_font("yugo330", size=4.8)
         self.pdf_obj.set_fill_color(0)
