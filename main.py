@@ -23,7 +23,19 @@ for folder in [output_folder, output_folder_pdf, output_folder_svg]:
 
 barcode_list = read_barcode_list(input_file)
 
-for code in barcode_list:
-    group = code2img(code, output_folder_svg)
+merge_barcode_list = ""
+
+for cnt, code in enumerate(barcode_list):
+    group, merge_barcode_group = code2img(code, output_folder_svg, cnt)
+    merge_barcode_list += merge_barcode_group
+    
     pdf_gen = PdfGen()
     pdf_gen.makePdf(group.childNodes, os.path.join(output_folder_pdf,str(code))+".pdf")
+
+with open("./merge_temp.svg", "r") as read_file:
+    svg_xml = read_file.read()
+    result_xml = svg_xml.replace("${SVG_LIST}", merge_barcode_list)
+    
+    with open(os.path.join(output_folder,"merge_barcodes.svg"), "w", encoding='utf-8') as write_file:
+        write_file.write(result_xml)
+        

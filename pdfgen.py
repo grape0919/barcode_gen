@@ -27,3 +27,4 @@ class PdfGen():
                 self.pdf_obj.text(x,y,text)
                 
         self.pdf_obj.output(path)
+        

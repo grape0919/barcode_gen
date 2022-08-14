@@ -1,5 +1,5 @@
 import os
-from barcode import EAN13
+from barcode.ean import EuropeanArticleNumber13
 import openpyxl
 from barcode.writer import SVGWriter, SIZE, COMMENT, _set_attributes, create_svg_object
 
@@ -67,7 +67,7 @@ class CSTWriter(SVGWriter):
             barcodetext = self.human
         else:
             barcodetext = self.text
-        ypos = 7.1
+        ypos = ypos-4.3
         element = self._document.createElement("text")
         temp_text = barcodetext[0]
         attributes = {
@@ -106,7 +106,16 @@ class CSTWriter(SVGWriter):
         element.appendChild(text_element)
         self._group.appendChild(element)
             # ypos += pt2mm(self.font_size) + self.text_line_distance
-MY_WRITER = CSTWriter()
+
+class MergeWriter(CSTWriter):
+    barcode_count = None
+    def _create_module(self, xpos, ypos, width, color):
+        ypos = ypos + (self.barcode_count * 9)
+        return super()._create_module(xpos, ypos, width, color)
+    def _create_text(self, xpos, ypos):
+        ypos = ypos + (self.barcode_count * 9)
+        return super()._create_text(xpos, ypos)
+
 
 def read_barcode_list(file_path):
     wb = openpyxl.load_workbook(file_path)
@@ -120,11 +129,21 @@ def read_barcode_list(file_path):
             
     return number_list
 
-def code2img(code, output_path):
+def code2img(code, output_path, count):
+    
+    my_writer = CSTWriter()
+    merge_writer = MergeWriter()
     str_number = str(code)
-    my_barcode = EAN13(str_number, writer=MY_WRITER)#, writer=image_writer)
-    file_name = str_number
-    output = os.path.join(output_path, file_name)
+    output = os.path.join(output_path, str_number)
+    
+    my_barcode = EuropeanArticleNumber13(str_number, writer=my_writer)#, writer=image_writer)
     my_barcode.save(output ,DEFAULT_OPTIONS)
-    return MY_WRITER._group
+    del my_barcode
+    
+    merge_writer.barcode_count = count
+    merge_barcode = EuropeanArticleNumber13(str_number, writer=merge_writer)
+    merge_barcode.render(DEFAULT_OPTIONS)
+    del merge_barcode
+    
+    return my_writer._group, merge_writer._group.toxml()
     
