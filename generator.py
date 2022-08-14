@@ -110,10 +110,10 @@ class CSTWriter(SVGWriter):
 class MergeWriter(CSTWriter):
     barcode_count = None
     def _create_module(self, xpos, ypos, width, color):
-        ypos = ypos + (self.barcode_count * 9)
+        ypos = ypos + (self.barcode_count * 8.6)
         return super()._create_module(xpos, ypos, width, color)
     def _create_text(self, xpos, ypos):
-        ypos = ypos + (self.barcode_count * 9)
+        ypos = ypos + (self.barcode_count * 8.6)
         return super()._create_text(xpos, ypos)
 
 
