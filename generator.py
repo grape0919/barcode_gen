@@ -136,6 +136,9 @@ def code2img(code, output_path, count):
     str_number = str(code)
     output = os.path.join(output_path, str_number)
     
+    if str_number == "None":
+        return None, None
+    
     my_barcode = EuropeanArticleNumber13(str_number, writer=my_writer)#, writer=image_writer)
     my_barcode.save(output ,DEFAULT_OPTIONS)
     del my_barcode

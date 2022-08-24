@@ -27,6 +27,8 @@ merge_barcode_list = ""
 
 for cnt, code in enumerate(barcode_list):
     group, merge_barcode_group = code2img(code, output_folder_svg, cnt)
+    if group is None:
+        continue
     merge_barcode_list += merge_barcode_group
     
     pdf_gen = PdfGen()
