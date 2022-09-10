@@ -84,7 +84,7 @@ class CSTWriter(SVGWriter):
         element = self._document.createElement("text")
         temp_text = barcodetext[1:7]
         attributes = {
-            "x": SIZE.format(2.55),
+            "x": SIZE.format(2.78),
             "y": SIZE.format(ypos),
             "style": "font-family:'-윤고딕330';font-size:4.8pt;letter-spacing:0.13em;",
         }
@@ -97,7 +97,7 @@ class CSTWriter(SVGWriter):
         element = self._document.createElement("text")
         temp_text = barcodetext[7:]
         attributes = {
-            "x": SIZE.format(10.1),
+            "x": SIZE.format(10.33),
             "y": SIZE.format(ypos),
             "style": "font-family:'-윤고딕330';font-size:4.8pt;letter-spacing:0.13em;",
         }
