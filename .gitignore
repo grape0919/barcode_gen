@@ -1,0 +1,8 @@
+.idea
+*__pycashe__*
+*.zip
+dist
+build
+barcode_gen/
+barcode_image/
+*.pkl
