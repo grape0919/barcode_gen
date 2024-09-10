@@ -30,9 +30,9 @@ for cnt, code in enumerate(barcode_list):
     if group is None:
         continue
     merge_barcode_list += merge_barcode_group
-    
-    pdf_gen = PdfGen()
-    pdf_gen.makePdf(group.childNodes, os.path.join(output_folder_pdf,str(code))+".pdf")
+#
+#     pdf_gen = PdfGen()
+#     pdf_gen.makePdf(group.childNodes, os.path.join(output_folder_pdf,str(code))+".pdf")
 
 with open("./merge_temp.svg", "r") as read_file:
     svg_xml = read_file.read()

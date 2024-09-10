@@ -4,12 +4,12 @@ import openpyxl
 from barcode.writer import SVGWriter, SIZE, COMMENT, _set_attributes, create_svg_object
 
 DEFAULT_OPTIONS = {
-    "module_width":0.167,
-    "module_height":5.4,
-    "font_size":4.8,
-    "font_path":"./윤고딕330.ttf",
-    "background":"white",
-    "dpi":300
+    "module_width":0.378,
+    "module_height":6.8,
+    "font_size":9.4,
+    "font_path":"./OCRBStd.ttf",
+    "quiet_zone":3.3,
+    "dpi":300,
 }
 
 class CSTWriter(SVGWriter):
@@ -18,7 +18,7 @@ class CSTWriter(SVGWriter):
 
     def _init(self, code):
         # width, height = self.calculate_size(len(code[0]), len(code))
-        width, height = 18, 7.4
+        width, height = 39.3, 9.8
         self._document = create_svg_object(self.with_doctype)
         self._root = self._document.documentElement
         attributes = {
@@ -49,9 +49,9 @@ class CSTWriter(SVGWriter):
             element = self._document.createElement("rect")
             height = self.module_height
             if len(self._group.childNodes) in [0,1,14,15,28,29]:
-                height = height + 1
+                height = height + 2
             attributes = {
-                "x": SIZE.format(xpos-4.5),
+                "x": SIZE.format(xpos),
                 "y": SIZE.format(ypos-1.0),
                 "width": SIZE.format(width),
                 "height": SIZE.format(height),
@@ -67,13 +67,13 @@ class CSTWriter(SVGWriter):
             barcodetext = self.human
         else:
             barcodetext = self.text
-        ypos = ypos-4.3
+        ypos = ypos-3.0
         element = self._document.createElement("text")
         temp_text = barcodetext[0]
         attributes = {
-            "x": SIZE.format(0),
+            "x": SIZE.format(-0.5),
             "y": SIZE.format(ypos),
-            "style": "font-family:'-윤고딕330';font-size:4.8pt;letter-spacing:0.13em;",
+            "style": "font-family:'OCR B Std';font-size:9.4pt;",
         }
         _set_attributes(element, **attributes)
         text_element = self._document.createTextNode(temp_text)
@@ -84,9 +84,9 @@ class CSTWriter(SVGWriter):
         element = self._document.createElement("text")
         temp_text = barcodetext[1:7]
         attributes = {
-            "x": SIZE.format(2.78),
+            "x": SIZE.format(5.0),
             "y": SIZE.format(ypos),
-            "style": "font-family:'-윤고딕330';font-size:4.8pt;letter-spacing:0.13em;",
+            "style": "font-family:'OCR B Std';font-size:9.4pt;letter-spacing:0.07em;",
         }
         _set_attributes(element, **attributes)
         text_element = self._document.createTextNode(temp_text)
@@ -97,9 +97,9 @@ class CSTWriter(SVGWriter):
         element = self._document.createElement("text")
         temp_text = barcodetext[7:]
         attributes = {
-            "x": SIZE.format(10.33),
+            "x": SIZE.format(22.2),
             "y": SIZE.format(ypos),
-            "style": "font-family:'-윤고딕330';font-size:4.8pt;letter-spacing:0.13em;",
+            "style": "font-family:'OCR B Std';font-size:9.4pt;letter-spacing:0.07em;",
         }
         _set_attributes(element, **attributes)
         text_element = self._document.createTextNode(temp_text)
@@ -110,10 +110,10 @@ class CSTWriter(SVGWriter):
 class MergeWriter(CSTWriter):
     barcode_count = None
     def _create_module(self, xpos, ypos, width, color):
-        ypos = ypos + (self.barcode_count * 8.6)
+        ypos = ypos + (self.barcode_count * 14.6)
         return super()._create_module(xpos, ypos, width, color)
     def _create_text(self, xpos, ypos):
-        ypos = ypos + (self.barcode_count * 8.6)
+        ypos = ypos + (self.barcode_count * 14.6)
         return super()._create_text(xpos, ypos)
 
 
