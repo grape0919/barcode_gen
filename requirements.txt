@@ -1,5 +1,0 @@
-openpyxl
-python-barcord
-python-barcode[images]
-fpdf
-pyinstaller
